@@ -1,6 +1,8 @@
-// SaveTek.js
-
 var SaveTek = (function () {
+  // Private properties
+  var autosaveIntervalId = null;
+  var defaultExpirationMinutes = 60; // Default expiration time for saved data
+
   // Private function to check if local storage is supported
   function isLocalStorageSupported() {
     try {
@@ -12,32 +14,46 @@ var SaveTek = (function () {
     }
   }
 
-  // Public function to save data to local storage
-  function saveData(key, value, expirationMinutes) {
+  // Private function to handle data encryption (simple example, consider using a robust method for production)
+  function encryptData(data) {
+    return btoa(JSON.stringify(data)); // Base64 encode
+  }
+
+  // Private function to handle data decryption
+  function decryptData(data) {
+    return JSON.parse(atob(data)); // Base64 decode and parse JSON
+  }
+
+  // Enhanced saveData to include version and encryption
+  function saveData(key, value, options = {}) {
     if (isLocalStorageSupported()) {
       var dataToStore = {
-        value: value,
-        expiration: expirationMinutes
-          ? new Date().getTime() + expirationMinutes * 60 * 1000
-          : null,
+        value: encryptData(value), // Encrypt data for storage
+        version: options.version || "1.0",
+        expiration: options.expirationMinutes
+          ? new Date().getTime() + options.expirationMinutes * 60 * 1000
+          : new Date().getTime() + defaultExpirationMinutes * 60 * 1000,
       };
       localStorage.setItem(key, JSON.stringify(dataToStore));
       console.log('Data saved successfully.');
+      if (options.callback) options.callback(true);
     } else {
       console.error('Local storage is not supported in this browser.');
+      if (options.callback) options.callback(false);
     }
   }
 
-  // Public function to retrieve data from local storage
-  function loadData(key) {
+  // Enhanced loadData to handle version control and decryption
+  function loadData(key, options = {}) {
     if (isLocalStorageSupported()) {
       var storedData = localStorage.getItem(key);
       if (storedData) {
         var parsedData = JSON.parse(storedData);
-        if (parsedData.expiration === null || parsedData.expiration > new Date().getTime()) {
-          return parsedData.value;
+        if ((parsedData.expiration === null || parsedData.expiration > new Date().getTime()) &&
+            (!options.version || parsedData.version === options.version)) {
+          return decryptData(parsedData.value); // Decrypt data
         } else {
-          console.warn('Data for the specified key has expired.');
+          console.warn('Data for the specified key has expired or version mismatch.');
           removeData(key);
           return null;
         }
@@ -71,21 +87,21 @@ var SaveTek = (function () {
     }
   }
 
-  // Public function for autosaving game progress
-  function autoSaveGame(key, gameData) {
-    // Autosave every 5 minutes
-    setInterval(function () {
-      saveData(key, gameData);
+  // Function to initiate autosave with a customizable interval
+  function autoSaveGame(key, gameData, intervalMinutes = 5, options = {}) {
+    clearInterval(autosaveIntervalId); // Clear existing interval if any
+    autosaveIntervalId = setInterval(function () {
+      saveData(key, gameData, { expirationMinutes: intervalMinutes, ...options });
       console.log('Game progress autosaved.');
-    }, 5 * 60 * 1000);
+    }, intervalMinutes * 60 * 1000);
   }
 
-  // Public function to load the most recent autosaved game data
-  function loadAutoSavedGame(key) {
-    return loadData(key);
+  // Function to load the most recent autosaved game data
+  function loadAutoSavedGame(key, options = {}) {
+    return loadData(key, options);
   }
 
-  // Expose public methods
+  // Public API
   return {
     saveData: saveData,
     loadData: loadData,
@@ -95,3 +111,9 @@ var SaveTek = (function () {
     loadAutoSavedGame: loadAutoSavedGame,
   };
 })();
+
+// Example usage:
+// SaveTek.saveData('gameState', { level: 10, score: 5000 }, { version: '1.1', expirationMinutes: 1440, callback: (success) => console.log('Save operation was ' + (success ? 'successful' : 'unsuccessful')) });
+// var gameState = SaveTek.loadData('gameState', { version: '1.1' });
+// console.log(gameState);
+
