@@ -38,4 +38,4 @@ The encryption provided by SaveTek.js is basic. Consider using a more secure enc
 Always test localStorage functionality extensively across different browsers and devices to ensure compatibility.
 License
 
-This project is licensed under the MIT License - see the LICENSE.md file for details.
+This project is licensed under the Apache License - see the LICENSE.md file for details.
