@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Savetek.js - LocalStorage API Library</title>
     <style>
+        /* CSS styles */
         body {
             font-family: Arial, sans-serif;
             margin: 0;
@@ -53,12 +54,24 @@
             bottom: 0;
             width: 100%;
         }
+        section {
+            margin-bottom: 40px;
+        }
+        pre {
+            background-color: #f3f3f3;
+            padding: 10px;
+            border-radius: 5px;
+            overflow-x: auto;
+        }
+        code {
+            font-family: Consolas, monospace;
+        }
     </style>
 </head>
 <body>
     <header>
         <h1>Savetek.js</h1>
-        <p>A lightweight JavaScript library for easy interaction with localStorage API.</p>
+        <p>A lightweight JavaScript library for easy interaction with the localStorage API.</p>
         <a href="#installation" class="btn">Get Started</a>
     </header>
 
@@ -75,6 +88,26 @@
             <pre><code>SaveTek.set('key', 'value');</code></pre>
             <pre><code>SaveTek.get('key');</code></pre>
             <pre><code>SaveTek.remove('key');</code></pre>
+        </section>
+
+        <section id="examples">
+            <h2>Examples</h2>
+            <p>Here are some examples demonstrating how to use Savetek.js in various scenarios.</p>
+            <pre><code>// Set a value in localStorage
+SaveTek.set('username', 'john_doe');
+
+// Retrieve a value from localStorage
+const username = SaveTek.get('username');
+console.log(username); // Output: john_doe
+
+// Remove a value from localStorage
+SaveTek.remove('username');</code></pre>
+        </section>
+
+        <section id="documentation">
+            <h2>Documentation</h2>
+            <p>Explore the full documentation to learn more about Savetek.js and its features.</p>
+            <a href="https://github.com/largefort/savetek-js#readme" class="btn">Read Documentation</a>
         </section>
 
         <section id="contribute">
