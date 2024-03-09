@@ -27,6 +27,7 @@
             color: #fff;
             padding: 40px 20px;
             text-align: center;
+            animation: fadeIn 1s ease-out;
         }
         .container {
             display: grid;
@@ -35,6 +36,7 @@
             max-width: 1200px;
             margin: 40px auto;
             padding: 0 20px;
+            animation: fadeIn 1.5s ease-out;
         }
         h1, h2 {
             font-weight: 600;
@@ -59,11 +61,12 @@
             color: #fff;
             text-decoration: none;
             border-radius: 8px;
-            transition: background-color 0.3s ease, transform 0.2s ease;
+            transition: background-color 0.3s ease, transform 0.2s ease, box-shadow 0.2s ease;
         }
         .btn:hover {
             background-color: #003d99;
             transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0,0,0,0.2);
         }
         footer {
             background-color: #333;
@@ -71,6 +74,7 @@
             text-align: center;
             padding: 20px 0;
             margin-top: 40px;
+            animation: fadeIn 2s ease-out;
         }
         pre {
             background-color: #f3f3f3;
@@ -80,6 +84,16 @@
         }
         code {
             font-family: 'Poppins', monospace;
+        }
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
         }
     </style>
 </head>
