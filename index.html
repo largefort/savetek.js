@@ -5,16 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Savetek.js - LocalStorage API Library</title>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
-    <!-- Include jQuery Mobile CSS -->
-    <link rel="stylesheet" href="https://code.jquery.com/mobile/1.5.0/jquery.mobile-1.5.0.min.css">
-    <!-- Include custom jQuery Mobile theme CSS -->
-    <link rel="stylesheet" href="jquery.mobile.custom.theme.css">
-    <!-- Include jQuery -->
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <!-- Include jQuery Mobile JS -->
-    <script src="https://code.jquery.com/mobile/1.5.0/jquery.mobile-1.5.0.min.js"></script>
     <style>
-        /* Your existing CSS styles */
         /* Reset CSS */
         *, *::before, *::after {
             box-sizing: border-box;
@@ -104,64 +95,99 @@
                 transform: translateY(0);
             }
         }
+        /* Custom collapsible styles */
+        .collapsible {
+            background-color: #f9f9f9;
+            border-radius: 8px;
+            padding: 20px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+        .collapsible h2 {
+            cursor: pointer;
+        }
+        .collapsible-content {
+            display: none;
+            margin-top: 20px;
+        }
+        .collapsible-content pre {
+            background-color: #f0f0f0;
+        }
     </style>
+    <script>
+        // Collapsible functionality
+        document.addEventListener('DOMContentLoaded', () => {
+            const collapsibles = document.querySelectorAll('.collapsible h2');
+            collapsibles.forEach(collapsible => {
+                collapsible.addEventListener('click', () => {
+                    collapsible.nextElementSibling.classList.toggle('collapsible-content-show');
+                });
+            });
+        });
+    </script>
 </head>
 <body>
-    <div data-role="page">
-        <header>
-            <h1>Savetek.js</h1>
-            <p>A lightweight JavaScript library for easy interaction with the localStorage API.</p>
-            <a href="#installation" class="btn">Get Started</a>
-        </header>
+    <header>
+        <h1>Savetek.js</h1>
+        <p>A lightweight JavaScript library for easy interaction with the localStorage API.</p>
+        <a href="#installation" class="btn">Get Started</a>
+    </header>
 
-        <div class="container">
-            <div data-role="content">
-                <section id="installation" data-role="collapsible">
-                    <h2>Installation</h2>
-                    <p>You can include Savetek.js in your project by either downloading it or linking directly to the CDN.</p>
-                    <pre><code>&lt;script src="https://cdn.jsdelivr.net/npm/savetek@1.0.2/savetek.min.js"&gt;&lt;/script&gt;</code></pre>
-                </section>
-
-                <section id="usage" data-role="collapsible">
-                    <h2>Usage</h2>
-                    <p>Savetek.js provides a simple and intuitive interface for localStorage operations.</p>
-                    <pre><code>SaveTek.set('key', 'value');</code></pre>
-                    <pre><code>SaveTek.get('key');</code></pre>
-                    <pre><code>SaveTek.remove('key');</code></pre>
-                </section>
-
-                <section id="examples" data-role="collapsible">
-                    <h2>Examples</h2>
-                    <p>Here are some examples demonstrating how to use Savetek.js in various scenarios.</p>
-                    <pre><code>// Set a value in localStorage
-    SaveTek.set('username', 'john_doe');
-
-    // Retrieve a value from localStorage
-    const username = SaveTek.get('username');
-    console.log(username); // Output: john_doe
-
-    // Remove a value from localStorage
-    SaveTek.remove('username');</code></pre>
-                </section>
-
-                <section id="documentation" data-role="collapsible">
-                    <h2>Documentation</h2>
-                    <p>Explore the full documentation to learn more about Savetek.js and its features.</p>
-                    <a href="https://github.com/largefort/savetek.js#readme" class="btn">Read Documentation</a>
-                </section>
-
-                <section id="contribute" data-role="collapsible">
-                    <h2>Contribute</h2>
-                    <p>Contributions are welcome! Feel free to fork the repository and submit pull requests.</p>
-                    <a href="https://github.com/largefort/savetek.js" class="btn">GitHub Repository</a>
-                </section>
+    <div class="container">
+        <section id="installation" class="collapsible">
+            <h2>Installation</h2>
+            <div class="collapsible-content">
+                <p>You can include Savetek.js in your project by either downloading it or linking directly to the CDN.</p>
+                <pre><code>&lt;script src="https://cdn.jsdelivr.net/npm/savetek@1.0.2/savetek.min.js"&gt;&lt;/script&gt;</code></pre>
             </div>
-        </div>
+        </section>
 
-        <footer>
-            &copy; 2024 JafetEgill | Savetek.js
-        </footer>
+        <section id="usage" class="collapsible">
+            <h2>Usage</h2>
+            <div class="collapsible-content">
+                <p>Savetek.js provides a simple and intuitive interface for localStorage operations.</p>
+                <pre><code>SaveTek.set('key', 'value');</code></pre>
+                <pre><code>SaveTek.get('key');</code></pre>
+                <pre><code>SaveTek.remove('key');</code></pre>
+            </div>
+        </section>
+
+        <section id="examples" class="collapsible">
+            <h2>Examples</h2>
+            <div class="collapsible-content">
+                <p>Here are some examples demonstrating how to use Savetek.js in various scenarios.</p>
+                <pre><code>// Set a value in localStorage
+SaveTek.set('username', 'john_doe');
+
+// Retrieve a value from localStorage
+const username = SaveTek.get('username');
+console.log(username); // Output: john_doe
+
+// Remove a value from localStorage
+SaveTek.remove('username');</code></pre>
+            </div>
+        </section>
+
+        <section id="documentation" class="collapsible">
+            <h2>Documentation</h2>
+            <div class="collapsible-content">
+                <p>Explore the full documentation to learn more about Savetek.js and its features.</p>
+                <a href="https://github.com/largefort/savetek.js#readme" class="btn">Read Documentation</a>
+            </div>
+        </section>
+
+        <section id="contribute" class="collapsible">
+            <h2>Contribute</h2>
+            <div class="collapsible-content">
+                <p>Contributions are welcome! Feel free to fork the repository and submit pull requests.</p>
+                <a href="https://github.com/largefort/savetek.js" class="btn">GitHub Repository</a>
+            </div>
+        </section>
     </div>
+
+    <footer>
+        &copy; 2024 JafetEgill | Savetek.js
+    </footer>
 </body>
 </html>
+
 
